@@ -1,0 +1,54 @@
+name: critterding
+version: "1.0"
+summary: Self Learning Critters
+description: |
+  AI critters that evolve
+base: core18
+confinement: devmode
+grade: devel
+license: LGPL-2.0
+
+
+parts:
+  critterding:
+    plugin: nil
+    stage-packages:
+      - critterding
+      - libftgl2
+      - libgcc1
+      - libgl1-mesa-glx
+      - libgl1
+      - libgomp1
+      - libsdl1.2debian
+      - libstdc++6
+      - freeglut3
+      - libslang2
+      - ttf-dejavu-core
+      
+    override-prime: |
+      snapcraftctl prime
+      sed -i.bak -e 's|Icon=critterding|Icon=/usr/share/icons/hicolor/22x22/apps/critterding.png|g' usr/share/applications/critterding.desktop
+
+apps:
+  critterding:
+    command: usr/bin/critterding
+    desktop: usr/share/applications/critterding.desktop
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/mesa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/mesa-gl:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/xorg:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio/
+      LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri 
+      DISABLE_WAYLAND: 1
+
+    plugs:
+      - home
+      - network
+      - opengl
+      - removable-media
+      - unity7
+      - x11
+      - wayland
+      - desktop
+      - desktop-legacy
+
+layout:
+  /usr/share/fonts/TTF/DejaVuSans.ttf:
+    symlink: $SNAP/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
