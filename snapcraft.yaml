@@ -4,8 +4,8 @@ summary: Self Learning Critters
 description: |
   AI critters that evolve
 base: core18
-confinement: devmode
-grade: devel
+confinement: strict
+grade: stable
 license: LGPL-2.0
 
 
